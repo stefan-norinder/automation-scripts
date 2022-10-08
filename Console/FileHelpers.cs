@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 
 namespace Console
@@ -33,10 +34,15 @@ namespace Console
             return File.Exists($"{CurrentDirectory}/{path}");
         }
 
+        public static string Read(string filename, string relativePath = "")
+        {
+            return File.ReadAllText($"{CurrentDirectory}/{relativePath}/{filename}");
+        }
+
         #region private 
 
         private static string CurrentDirectory => Directory.GetCurrentDirectory();
-        
+
         #endregion
     }
 }

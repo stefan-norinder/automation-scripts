@@ -45,5 +45,13 @@ namespace Tests
         {
             Assert.IsTrue(FileHelpers.FileExists("/TestData/foo.txt"));
         }
+
+        [Test]
+        public void ReadFile()
+        {
+            var expected = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
+            var content = FileHelpers.Read("/TestData/foo.txt");
+            Assert.AreEqual(expected, content);
+        }
     }
 }
