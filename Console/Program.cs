@@ -12,7 +12,9 @@ namespace Console
             try
             {
                 var filesAndRows = Enumerable.Empty<FilesWithRows>();
-                var controller = new FilesController();
+                var filesController = new FilesController();
+                var gitController = new GitController();
+
                 switch (args.First())
                 {
                     case "Help":
@@ -20,32 +22,35 @@ namespace Console
                         System.Console.WriteLine($"{Constants.Args.Print()}");
                         break;
                     case Constants.Args.GetFiles:
-                        filesAndRows = controller.GetFilesBySearchString(args[1]);
+                        filesAndRows = filesController.GetFilesBySearchString(args[1]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetAllFiles:
-                        filesAndRows = controller.GetAllFiles();
+                        filesAndRows = filesController.GetAllFiles();
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetRows:
-                        filesAndRows = controller.GetRowsBySearchString(args[1]);
+                        filesAndRows = filesController.GetRowsBySearchString(args[1]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.AddRowFirst:
-                        filesAndRows = controller.AddRowFirst(args[1], args[2]);
+                        filesAndRows = filesController.AddRowFirst(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.AddRowLast:
-                        filesAndRows = controller.AddRowLast(args[1], args[2]);
+                        filesAndRows = filesController.AddRowLast(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.ReplaceText:
-                        filesAndRows = controller.ReplaceText(args[1], args[2], args[3]);
+                        filesAndRows = filesController.ReplaceText(args[1], args[2], args[3]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.RemoveText:
-                        filesAndRows = controller.RemoveText(args[1], args[2]);
+                        filesAndRows = filesController.RemoveText(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
+                        break;
+                    case Constants.Args.GitStatus:
+                        System.Console.WriteLine($"{gitController.CheckStatus(args[1])}");
                         break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
@@ -83,6 +88,7 @@ namespace Console
             public const string AddRowLast = "add-row-last";
             public const string ReplaceText = "replace-text";
             public const string RemoveText = "remove-text";
+            public const string GitStatus = "git-status";
         }
     }
 }

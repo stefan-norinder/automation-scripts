@@ -36,6 +36,7 @@ namespace Console
         {
             using (var fileStream = File.OpenWrite(path))
             {
+                content = content.ReplaceText("\\r\\n", Environment.NewLine);
                 var info = new UTF8Encoding(true).GetBytes(content);
 
                 fileStream.Write(info, 0, info.Length);

@@ -2,7 +2,7 @@
   "profiles": {
     "Console": {
       "commandName": "Project",
-      "commandLineArgs": "replace-text doc1 \"rowast row\" \"foo\""
+      "commandLineArgs": "git-status C:\\\\Users\\\\Stefan Adm\\\\code\\\\automation-scripts\\\\"
     }
   }
 }
