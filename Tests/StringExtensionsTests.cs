@@ -64,7 +64,7 @@ namespace Tests
         public void RowBySearchString()
         {
             var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
-            var expexted = "And this is the second line";
+            var expexted = "[2] And this is the second line";
             var result = data.GetRowsBySearch("the second line");
             Assert.AreEqual(expexted, result.First());
         }
