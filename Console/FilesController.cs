@@ -32,5 +32,19 @@ namespace Console
             var files = FileHelpers.GetFilesRecursiveByName(searchString);
             return files.Select(x => new FilesWithRows { File = x });
         }
+
+        public IEnumerable<FilesWithRows> AddRowFirst(string fileName, string textToAdd)
+        {
+            var filesAndRows = new List<FilesWithRows>();
+            var files = FileHelpers.GetFilesRecursiveByName(fileName);
+            foreach (var file in files)
+            {
+                var content = FileHelpers.Read(file);
+                content = content.AddRowFirst(textToAdd);
+                FileHelpers.Write(file, content);
+                filesAndRows.Add(new FilesWithRows { File = file, Rows = content.ToRows() });
+            }
+            return filesAndRows;
+        }
     }
 }

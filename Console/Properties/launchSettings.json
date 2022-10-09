@@ -2,7 +2,7 @@
   "profiles": {
     "Console": {
       "commandName": "Project",
-      "commandLineArgs": "get-rows row"
+      "commandLineArgs": "add-row-first doc1.txt \"here is the new first line\""
     }
   }
 }

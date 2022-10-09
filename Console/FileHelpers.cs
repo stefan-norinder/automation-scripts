@@ -27,7 +27,16 @@ namespace Console
             string path = $"{CurrentDirectory}/{relativePath}/{fileName}";
             using (var fileStream = File.Create(path))
             {
-                var  info = new UTF8Encoding(true).GetBytes(content);
+                var info = new UTF8Encoding(true).GetBytes(content);
+
+                fileStream.Write(info, 0, info.Length);
+            }
+        }
+        public static void Write(string path, string content)
+        {
+            using (var fileStream = File.OpenWrite(path))
+            {
+                var info = new UTF8Encoding(true).GetBytes(content);
 
                 fileStream.Write(info, 0, info.Length);
             }

@@ -18,33 +18,43 @@ namespace Console
 
         public static string InsertRowAtPosition(this string content, string row, int position)
         {
-            List<string> list = GetContentAsListOfRows(content);
+            var list = ToListOfRows(content);
             list.Insert(position - 1, row);
             return string.Join(Environment.NewLine, list);
         }
 
         public static string GetRowByIndex(this string content, int position)
         {
-            List<string> list = GetContentAsListOfRows(content);
+            var list = ToListOfRows(content);
             string row = list.ElementAt(position - 1);
             if (string.IsNullOrEmpty(row)) return string.Empty;
             return row.Trim();
+        }
+        public static string[] ToRows(this string content)
+        {
+            var rows = content.ToListOfRows();
+            for (int i = 0; i < rows.Count; i++)
+            {
+                rows[i] = rows[i].AddRowNumber(i+1);
+            }
+
+            return rows.ToArray();
         }
 
         public static string[] GetRowsBySearch(this string content, string search)
         {
             var result = new List<string>();
-            List<string> list = GetContentAsListOfRows(content);
+            List<string> list = ToListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.Add($"[{i+1}] {list[i].Trim()}");
+                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i +1);
             }
             return result.ToArray();
         }
 
         public static int FindRowNumberOfFirstInstanceOf(this string content, string search)
         {
-            var list = GetContentAsListOfRows(content);
+            var list = content.ToListOfRows();
             for (int i = 0; i < list.Count(); i++)
             {
                 if (string.Equals(list[i].Trim(), search.Trim(), StringComparison.InvariantCultureIgnoreCase)) return i + 1;
@@ -52,7 +62,16 @@ namespace Console
             throw new SearchStringNotFoundException(search);
         }
 
-        private static List<string> GetContentAsListOfRows(this string content)
+        public static void AddRow(this List<string> collection, string item, int rowNumber)
+        {
+            collection.Add(item.AddRowNumber(rowNumber));
+        }
+        public static string AddRowNumber(this string str, int rowNumber)
+        {
+            return $"[{rowNumber}] {str.Trim()}";
+        }
+
+        private static List<string> ToListOfRows(this string content)
         {
             var array = content.Split(Environment.NewLine);
             return array.ToList();
