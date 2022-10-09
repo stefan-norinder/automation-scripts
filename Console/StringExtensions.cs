@@ -37,7 +37,7 @@ namespace Console
             List<string> list = GetContentAsListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase))result.Add(list[i].Trim());
+                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.Add($"[{i+1}] {list[i].Trim()}");
             }
             return result.ToArray();
         }

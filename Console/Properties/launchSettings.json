@@ -2,7 +2,7 @@
   "profiles": {
     "Console": {
       "commandName": "Project",
-      "commandLineArgs": "get-files t"
+      "commandLineArgs": "get-rows row"
     }
   }
 }

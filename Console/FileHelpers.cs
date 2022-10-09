@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Console
@@ -11,14 +12,14 @@ namespace Console
         {
             if (string.IsNullOrEmpty(path)) path = CurrentDirectory;
 
-            return Directory.GetFiles(path, $"*{fileName}", SearchOption.AllDirectories).Filter();
+            return GetFilesFiltred(fileName, path);
         }
 
         public static string[] GetAllFiles(string path = "")
         {
             if (string.IsNullOrEmpty(path)) path = CurrentDirectory;
 
-            return Directory.GetFiles(path, $"*", SearchOption.AllDirectories).Filter();
+            return GetFilesFiltred(string.Empty, path);
         }
 
         public static void CreateFile(string fileName, string relativePath, string content = "")
@@ -50,6 +51,11 @@ namespace Console
         #region private 
 
         private static string CurrentDirectory => Directory.GetCurrentDirectory();
+
+        private static string[] GetFilesFiltred(string fileName, string path)
+        {
+            return Directory.GetFiles(path, $"*{fileName}", SearchOption.AllDirectories).Filter();
+        }
 
         #endregion
     }

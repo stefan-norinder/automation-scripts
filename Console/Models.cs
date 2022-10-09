@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Console
 {
     public class FilesWithRows
     {
+        private string[] rows = new string[0];
+        private string file;
         public FilesWithRows()
         {
-            Rows = new string[0];
+            rows = new string[0];
         }
 
-        public string File { get; set; }
-        public string[] Rows { get; set; }
+        public string File { get { return $">> {file.Replace(Directory.GetCurrentDirectory(), string.Empty)}"; } set { file = value; } }
+        public string[] Rows { get { return rows; } set { rows = value; } }
 
         public override string ToString() => $"{File}{Environment.NewLine}{string.Join(Environment.NewLine, Rows)}";
     }
