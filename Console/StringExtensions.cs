@@ -18,7 +18,12 @@ namespace Console
 
         public static string ReplaceText(this string content, string textToReplace, string newText)
         {
-            return content.Replace(textToReplace,newText);
+            return content.Replace(textToReplace, newText);
+        }
+
+        public static string RemoveText(this string content, string textToReplace)
+        {
+            return content.Replace(textToReplace, string.Empty);
         }
 
         public static string InsertRowAtPosition(this string content, string row, int position)

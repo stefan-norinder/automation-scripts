@@ -49,14 +49,19 @@ namespace Console
             return ManipulateRow(fileName, textToReplace, null, newText, StringExtensions.ReplaceText);
         }
 
-        private IEnumerable<FilesWithRows> ManipulateRow(string fileName, string textToAdd, Func<string, string, string> func, string newText = "", Func<string, string, string,string> func2 = null)
+        public IEnumerable<FilesWithRows> RemoveText(string fileName, string textToRemove)
+        {
+            return ManipulateRow(fileName, textToRemove, StringExtensions.RemoveText);
+        }
+
+        private IEnumerable<FilesWithRows> ManipulateRow(string fileName, string text, Func<string, string, string> func, string newText = "", Func<string, string, string,string> func2 = null)
         {
             var filesAndRows = new List<FilesWithRows>();
             var files = FileHelpers.GetFilesRecursiveByName(fileName);
             foreach (var file in files)
             {
                 var content = FileHelpers.Read(file);
-                content = func != null ? func(content,textToAdd) : func2(content,textToAdd,newText);
+                content = func != null ? func(content,text) : func2(content,text,newText);
                 FileHelpers.Write(file, content);
                 filesAndRows.Add(new FilesWithRows { File = file, Rows = content.ToRows() });
             }

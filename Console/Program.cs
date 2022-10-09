@@ -43,6 +43,10 @@ namespace Console
                         filesAndRows = controller.ReplaceText(args[1], args[2], args[3]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
+                    case Constants.Args.RemoveText:
+                        filesAndRows = controller.RemoveText(args[1], args[2]);
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
                 }
@@ -78,6 +82,7 @@ namespace Console
             public const string AddRowFirst = "add-row-first";
             public const string AddRowLast = "add-row-last";
             public const string ReplaceText = "replace-text";
+            public const string RemoveText = "remove-text";
         }
     }
 }
