@@ -36,22 +36,27 @@ namespace Console
 
         public IEnumerable<FilesWithRows> AddRowFirst(string fileName, string textToAdd)
         {
-            return AddRow(fileName, textToAdd, StringExtensions.AddRowFirst);
+            return ManipulateRow(fileName, textToAdd, StringExtensions.AddRowFirst);
         }
 
         public IEnumerable<FilesWithRows> AddRowLast(string fileName, string textToAdd)
         {
-            return AddRow(fileName, textToAdd, StringExtensions.AddRowLast);
+            return ManipulateRow(fileName, textToAdd, StringExtensions.AddRowLast);
         }
 
-        private IEnumerable<FilesWithRows> AddRow(string fileName, string textToAdd, Func<string,string,string> func)
+        public IEnumerable<FilesWithRows> ReplaceText(string fileName, string textToReplace, string newText)
+        {
+            return ManipulateRow(fileName, textToReplace, null, newText, StringExtensions.ReplaceText);
+        }
+
+        private IEnumerable<FilesWithRows> ManipulateRow(string fileName, string textToAdd, Func<string, string, string> func, string newText = "", Func<string, string, string,string> func2 = null)
         {
             var filesAndRows = new List<FilesWithRows>();
             var files = FileHelpers.GetFilesRecursiveByName(fileName);
             foreach (var file in files)
             {
                 var content = FileHelpers.Read(file);
-                content = func(content,textToAdd);
+                content = func != null ? func(content,textToAdd) : func2(content,textToAdd,newText);
                 FileHelpers.Write(file, content);
                 filesAndRows.Add(new FilesWithRows { File = file, Rows = content.ToRows() });
             }

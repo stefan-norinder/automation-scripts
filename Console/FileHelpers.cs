@@ -63,7 +63,7 @@ namespace Console
 
         private static string[] GetFilesFiltred(string fileName, string path)
         {
-            return Directory.GetFiles(path, $"*{fileName}", SearchOption.AllDirectories).Filter();
+            return Directory.GetFiles(path, $"*{fileName}*", SearchOption.AllDirectories).Filter();
         }
 
         #endregion

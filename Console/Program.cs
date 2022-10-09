@@ -39,13 +39,18 @@ namespace Console
                         filesAndRows = controller.AddRowLast(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
+                    case Constants.Args.ReplaceText:
+                        filesAndRows = controller.ReplaceText(args[1], args[2], args[3]);
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
                 }
             }
             catch (Exception e)
             {
-                System.Console.WriteLine($"Error!{Environment.NewLine}{Environment.NewLine}{e.Message}{Environment.NewLine}{Environment.NewLine}{e.StackTrace}{Environment.NewLine}{Environment.NewLine}");
+                if (e.Message == "Index was outside the bounds of the array.") System.Console.WriteLine("Fel antal argument.");
+                else System.Console.WriteLine($"Error!{Environment.NewLine}{Environment.NewLine}{e.Message}{Environment.NewLine}{Environment.NewLine}{e.StackTrace}{Environment.NewLine}{Environment.NewLine}");
             }
         }
     }
@@ -72,6 +77,7 @@ namespace Console
             public const string GetRows = "get-rows";
             public const string AddRowFirst = "add-row-first";
             public const string AddRowLast = "add-row-last";
+            public const string ReplaceText = "replace-text";
         }
     }
 }

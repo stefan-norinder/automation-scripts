@@ -16,6 +16,11 @@ namespace Console
             return InsertRowAtPosition(content, row, NumberOfRows(content) + 1);
         }
 
+        public static string ReplaceText(this string content, string textToReplace, string newText)
+        {
+            return content.Replace(textToReplace,newText);
+        }
+
         public static string InsertRowAtPosition(this string content, string row, int position)
         {
             var list = ToListOfRows(content);

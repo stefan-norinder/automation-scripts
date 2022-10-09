@@ -35,6 +35,17 @@ namespace Tests
         }
 
         [Test]
+        public void ReplaceRow()
+        {
+            var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
+            var textToReplace = "And this is the second line";
+            var newText = "Foo row";
+            var expexted = "This is the file foo \r\nFoo row \r\nThis is the third line";
+            var result = data.Replace(textToReplace, newText);
+            Assert.AreEqual(expexted, result);
+        }
+
+        [Test]
         public void AddRowAtPosition()
         {
             var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";

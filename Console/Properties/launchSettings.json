@@ -2,7 +2,7 @@
   "profiles": {
     "Console": {
       "commandName": "Project",
-      "commandLineArgs": "add-row-first doc1.txt \"here is the new first line\""
+      "commandLineArgs": "replace-text doc1 \"rowast row\" \"foo\""
     }
   }
 }
