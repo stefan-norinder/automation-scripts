@@ -1,34 +1,45 @@
-﻿using System.Management.Automation;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
 
 namespace Console
 {
     public class GitController
     {
-        public void CommitAllChildDirectories(string message)
+        public IEnumerable<FilesWithRows> CommitAllChildDirectories(string message)
         {
-            foreach (var directory in FileHelpers.GetAllDirectories())
-                using (var powershell = PowerShell.Create())
-                {
-                    powershell.AddScript($"cd '{directory}'");
-
-                    powershell.AddScript(@"git add .");
-                    powershell.AddScript($"git commit -m '{message}'");
-
-                    var results = powershell.Invoke();
-                }
+            return ExecuteCommands(@"git add .", $"git commit -m '{message}'" );
+            
+        }
+        public IEnumerable<FilesWithRows> GetStatusAllChildDirectories()
+        {
+            return ExecuteCommands(@"git status" );
         }
 
-        public void PushAllChildDirectories(string message)
+        public IEnumerable<FilesWithRows> PushAllChildDirectories()
         {
+            return ExecuteCommands(@"git push");
+        }
+
+        private IEnumerable<FilesWithRows> ExecuteCommands(params string[] commands)
+        {
+            var result = new List<FilesWithRows>();
             foreach (var directory in FileHelpers.GetAllDirectories())
+            {
                 using (var powershell = PowerShell.Create())
                 {
                     powershell.AddScript($"cd '{directory}'");
 
-                    powershell.AddScript(@"git push");
+                    foreach (var command in commands)
+                    {
+                        powershell.AddScript(command);
+                    }
 
                     var results = powershell.Invoke();
+                    result.Add(new FilesWithRows { File = directory, Rows = results.Select(x => x.ToString()).ToArray() });
                 }
+            }
+            return result;
         }
     }
 }

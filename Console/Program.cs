@@ -50,12 +50,16 @@ namespace Console
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GitCommit:
-                        gitController.CommitAllChildDirectories(args[1]);
-                        System.Console.WriteLine($"All commited");
+                        filesAndRows = gitController.CommitAllChildDirectories(args[1]);
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GitPush:
-                        gitController.PushAllChildDirectories(args[1]);
-                        System.Console.WriteLine($"All pushed");
+                        filesAndRows = gitController.PushAllChildDirectories();
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        break;
+                    case Constants.Args.GitStatus:
+                        filesAndRows = gitController.GetStatusAllChildDirectories();
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
@@ -95,6 +99,7 @@ namespace Console
             public const string RemoveText = "remove-text";
             public const string GitCommit = "git-commit";
             public const string GitPush = "git-push";
+            public const string GitStatus = "git-status";
         }
     }
 }
