@@ -4,18 +4,31 @@ namespace Console
 {
     public class GitController
     {
-        public string CheckStatus(string directory)
-        {             
-            using (PowerShell powershell = PowerShell.Create())
-            {
-                powershell.AddScript($"cd '{directory}'");
+        public void CommitAllChildDirectories(string message)
+        {
+            foreach (var directory in FileHelpers.GetAllDirectories())
+                using (var powershell = PowerShell.Create())
+                {
+                    powershell.AddScript($"cd '{directory}'");
 
-                powershell.AddScript(@"git add .");
-                
-                var results = powershell.Invoke();
-            }
+                    powershell.AddScript(@"git add .");
+                    powershell.AddScript($"git commit -m '{message}'");
 
-            return string.Empty;
+                    var results = powershell.Invoke();
+                }
+        }
+
+        public void PushAllChildDirectories(string message)
+        {
+            foreach (var directory in FileHelpers.GetAllDirectories())
+                using (var powershell = PowerShell.Create())
+                {
+                    powershell.AddScript($"cd '{directory}'");
+
+                    powershell.AddScript(@"git push");
+
+                    var results = powershell.Invoke();
+                }
         }
     }
 }

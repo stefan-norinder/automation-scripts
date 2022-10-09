@@ -2,7 +2,7 @@
   "profiles": {
     "Console": {
       "commandName": "Project",
-      "commandLineArgs": "git-status C:\\\\Users\\\\Stefan Adm\\\\code\\\\automation-scripts\\\\"
+      "commandLineArgs": "git-status test"
     }
   }
 }

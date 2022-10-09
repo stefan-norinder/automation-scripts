@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace Console
@@ -13,6 +12,11 @@ namespace Console
             if (string.IsNullOrEmpty(path)) path = CurrentDirectory;
 
             return GetFilesFiltred(fileName, path);
+        }
+
+        public static string[] GetAllDirectories()
+        {
+            return Directory.GetDirectories($"{CurrentDirectory}");
         }
 
         public static string[] GetAllFiles(string path = "")

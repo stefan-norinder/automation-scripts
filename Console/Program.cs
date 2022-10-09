@@ -49,8 +49,13 @@ namespace Console
                         filesAndRows = filesController.RemoveText(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
-                    case Constants.Args.GitStatus:
-                        System.Console.WriteLine($"{gitController.CheckStatus(args[1])}");
+                    case Constants.Args.GitCommit:
+                        gitController.CommitAllChildDirectories(args[1]);
+                        System.Console.WriteLine($"All commited");
+                        break;
+                    case Constants.Args.GitPush:
+                        gitController.PushAllChildDirectories(args[1]);
+                        System.Console.WriteLine($"All pushed");
                         break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
@@ -88,7 +93,8 @@ namespace Console
             public const string AddRowLast = "add-row-last";
             public const string ReplaceText = "replace-text";
             public const string RemoveText = "remove-text";
-            public const string GitStatus = "git-status";
+            public const string GitCommit = "git-commit";
+            public const string GitPush = "git-push";
         }
     }
 }
