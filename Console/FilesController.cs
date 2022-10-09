@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Console
@@ -35,12 +36,22 @@ namespace Console
 
         public IEnumerable<FilesWithRows> AddRowFirst(string fileName, string textToAdd)
         {
+            return AddRow(fileName, textToAdd, StringExtensions.AddRowFirst);
+        }
+
+        public IEnumerable<FilesWithRows> AddRowLast(string fileName, string textToAdd)
+        {
+            return AddRow(fileName, textToAdd, StringExtensions.AddRowLast);
+        }
+
+        private IEnumerable<FilesWithRows> AddRow(string fileName, string textToAdd, Func<string,string,string> func)
+        {
             var filesAndRows = new List<FilesWithRows>();
             var files = FileHelpers.GetFilesRecursiveByName(fileName);
             foreach (var file in files)
             {
                 var content = FileHelpers.Read(file);
-                content = content.AddRowFirst(textToAdd);
+                content = func(content,textToAdd);
                 FileHelpers.Write(file, content);
                 filesAndRows.Add(new FilesWithRows { File = file, Rows = content.ToRows() });
             }

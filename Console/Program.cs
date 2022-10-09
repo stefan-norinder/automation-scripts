@@ -35,6 +35,10 @@ namespace Console
                         filesAndRows = controller.AddRowFirst(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
+                    case Constants.Args.AddRowLast:
+                        filesAndRows = controller.AddRowLast(args[1], args[2]);
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
                 }
@@ -67,6 +71,7 @@ namespace Console
             public const string GetAllFiles = "get-all-files";
             public const string GetRows = "get-rows";
             public const string AddRowFirst = "add-row-first";
+            public const string AddRowLast = "add-row-last";
         }
     }
 }
