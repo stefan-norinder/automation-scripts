@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Tests
 {
-    public class ContentHelpersTests
+    public class StringExtensionsTests
     {
         [SetUp]
         public void Setup()
@@ -47,8 +47,33 @@ namespace Tests
         public void FindRowNumber()
         {
             var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
-            int result = data.FindRowNumber("And this is the second line ");
+            int result = data.FindRowNumberOfFirstInstanceOf("And this is the second line ");
             Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void RowByIndex()
+        {
+            var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
+            var expexted = "And this is the second line";
+            var result = data.GetRowByIndex(2);
+            Assert.AreEqual(expexted, result);
+        }
+
+        [Test]
+        public void RowBySearchString()
+        {
+            var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
+            var expexted = "And this is the second line";
+            var result = data.GetRowsBySearch("the second line");
+            Assert.AreEqual(expexted, result.First());
+        }
+        [Test]
+        public void RowsBySearchString()
+        {
+            var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
+            var result = data.GetRowsBySearch("this is");
+            Assert.AreEqual(3, result.Count());
         }
     }
 }

@@ -19,18 +19,37 @@ namespace Console
         public static string InsertRowAtPosition(this string content, string row, int position)
         {
             List<string> list = GetContentAsListOfRows(content);
-            list.Insert(position -1, row);
+            list.Insert(position - 1, row);
             return string.Join(Environment.NewLine, list);
         }
 
-        public static int FindRowNumber(this string content, string search)
+        public static string GetRowByIndex(this string content, int position)
+        {
+            List<string> list = GetContentAsListOfRows(content);
+            string row = list.ElementAt(position - 1);
+            if (string.IsNullOrEmpty(row)) return string.Empty;
+            return row.Trim();
+        }
+
+        public static string[] GetRowsBySearch(this string content, string search)
+        {
+            var result = new List<string>();
+            List<string> list = GetContentAsListOfRows(content);
+            for (int i = 0; i < list.Count(); i++)
+            {
+                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase))result.Add(list[i].Trim());
+            }
+            return result.ToArray();
+        }
+
+        public static int FindRowNumberOfFirstInstanceOf(this string content, string search)
         {
             var list = GetContentAsListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i] == search) return i + 1;
+                if (string.Equals(list[i].Trim(), search.Trim(), StringComparison.InvariantCultureIgnoreCase)) return i + 1;
             }
-            throw new Exception($"Unable to find string {search}");
+            throw new SearchStringNotFoundException(search);
         }
 
         private static List<string> GetContentAsListOfRows(this string content)

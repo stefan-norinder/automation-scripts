@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -10,7 +11,14 @@ namespace Console
         {
             if (string.IsNullOrEmpty(path)) path = CurrentDirectory;
 
-            return Directory.GetFiles(path, $"*{fileName}", SearchOption.AllDirectories);
+            return Directory.GetFiles(path, $"*{fileName}", SearchOption.AllDirectories).Filter();
+        }
+
+        public static string[] GetAllFiles(string path = "")
+        {
+            if (string.IsNullOrEmpty(path)) path = CurrentDirectory;
+
+            return Directory.GetFiles(path, $"*", SearchOption.AllDirectories).Filter();
         }
 
         public static void CreateFile(string fileName, string relativePath, string content = "")
@@ -34,9 +42,9 @@ namespace Console
             return File.Exists($"{CurrentDirectory}/{path}");
         }
 
-        public static string Read(string filename, string relativePath = "")
+        public static string Read(string path, bool pathIsRelative = false)
         {
-            return File.ReadAllText($"{CurrentDirectory}/{relativePath}/{filename}");
+            return pathIsRelative ? File.ReadAllText($"{CurrentDirectory}/{path}") : File.ReadAllText(path);
         }
 
         #region private 
@@ -44,5 +52,27 @@ namespace Console
         private static string CurrentDirectory => Directory.GetCurrentDirectory();
 
         #endregion
+    }
+    public static class StringCollectionExtension
+    {
+        private const string filtredFileEndings = ".dll .exe .pdb";
+        public static string[] Filter(this string[] files)
+        {
+            var list = new List<string>();
+            foreach (var file in files)
+            {
+                bool add = true;
+                foreach (var str in filtredFileEndings.Split(" "))
+                {
+                    if (file.EndsWith(str))
+                    {
+                        add = false;
+                    }
+                }
+                if (add) list.Add(file);
+                
+            }
+            return list.ToArray();
+        }
     }
 }

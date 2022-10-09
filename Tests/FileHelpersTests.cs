@@ -50,7 +50,7 @@ namespace Tests
         public void ReadFile()
         {
             var expected = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
-            var content = FileHelpers.Read("/TestData/foo.txt");
+            var content = FileHelpers.Read("/TestData/foo.txt", true);
             Assert.AreEqual(expected, content);
         }
     }
