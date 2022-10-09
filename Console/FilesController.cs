@@ -21,6 +21,21 @@ namespace Console
             }
             return filesWithRows;
         }
+        public IEnumerable<FilesWithRows> GetRowsBySearchString(string fileFilter, string searchString)
+        {
+            var filesWithRows = new List<FilesWithRows>();
+            var files = FileHelpers.GetFilesRecursiveByName(fileFilter);
+            foreach (var file in files)
+            {
+                var content = FileHelpers.Read(file);
+                var rows = content.GetRowsBySearch(searchString);
+                if (rows.Any())
+                {
+                    filesWithRows.Add(new FilesWithRows { File = file, Rows = rows });
+                }
+            }
+            return filesWithRows;
+        }
 
         public IEnumerable<FilesWithRows> GetAllFiles()
         {

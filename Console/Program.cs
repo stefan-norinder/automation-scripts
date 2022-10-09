@@ -33,6 +33,10 @@ namespace Console
                         filesAndRows = filesController.GetRowsBySearchString(args[1]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
+                    case Constants.Args.GetRowsInFiles:
+                        filesAndRows = filesController.GetRowsBySearchString(args[1], args[2]);
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        break;
                     case Constants.Args.AddRowFirst:
                         filesAndRows = filesController.AddRowFirst(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
@@ -93,6 +97,7 @@ namespace Console
             public const string GetFiles = "get-files";
             public const string GetAllFiles = "get-all-files";
             public const string GetRows = "get-rows";
+            public const string GetRowsInFiles = "get-rows-in-files";
             public const string AddRowFirst = "add-row-first";
             public const string AddRowLast = "add-row-last";
             public const string ReplaceText = "replace-text";

@@ -2,7 +2,7 @@
   "profiles": {
     "Console": {
       "commandName": "Project",
-      "commandLineArgs": "git-status"
+      "commandLineArgs": "get-rows-in-files \".csproj\" \"<PackageReference Include=\""
     }
   }
 }

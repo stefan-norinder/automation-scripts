@@ -59,6 +59,7 @@ namespace Console
             {
                 if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i +1);
             }
+            System.Console.Write("|");
             return result.ToArray();
         }
 
