@@ -36,7 +36,10 @@ namespace Console
                     }
 
                     var results = powershell.Invoke();
-                    result.Add(new FilesWithRows { File = directory, Rows = results.Select(x => x.ToString()).ToArray() });
+                    if (results.Any())
+                    {
+                        result.Add(new FilesWithRows { File = directory, Rows = results.Select(x => x.ToString()).ToArray() });
+                    }
                 }
             }
             return result;
