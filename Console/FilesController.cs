@@ -31,27 +31,34 @@ namespace Console
 
         public IEnumerable<FilesWithRows> AddRowFirst(string fileName, string textToAdd)
         {
-            return ManipulateRow(fileName, textToAdd, StringExtensions.AddRowFirst);
+            var files = SearchInFiles(fileName, textToAdd);
+            files.AddRowFirst(fileName);
+            files.Save();
+            return files;
         }
 
         public IEnumerable<FilesWithRows> AddRowLast(string fileName, string textToAdd)
         {
-            return ManipulateRow(fileName, textToAdd, StringExtensions.AddRowLast);
-        }
-
-        public IEnumerable<FilesWithRows> ReplaceText(string fileName, string textToReplace, string newText)
-        {
-            return ManipulateRow(fileName, textToReplace, null, newText, StringExtensions.ReplaceText);
+            var files = SearchInFiles(fileName, textToAdd);
+            files.AddRowLast(fileName);
+            files.Save();
+            return files;
         }
 
         public IEnumerable<FilesWithRows> ReplaceRow(string fileName, string textToReplace, string newText)
         {
-            return ManipulateRow(fileName, textToReplace, null, newText, StringExtensions.ReplaceText);
+            var files = SearchInFiles(fileName, textToReplace);
+            files.ReplaceRow(textToReplace,newText);
+            files.Save();
+            return files;
         }
 
-        public IEnumerable<FilesWithRows> RemoveText(string fileName, string textToRemove)
+        public IEnumerable<FilesWithRows> RemoveRow(string fileName, string textToRemove)
         {
-            return ManipulateRow(fileName, textToRemove, StringExtensions.RemoveText);
+            var files = SearchInFiles(fileName, textToRemove);
+            files.RemoveRow(textToRemove);
+            files.Save();
+            return files;
         }
 
         private IEnumerable<FilesWithRows> SearchInFiles(string searchString, string[] files)

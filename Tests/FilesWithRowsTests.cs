@@ -24,9 +24,8 @@ namespace Tests
             var list = new List<FilesWithRows>()
             {
                 new FilesWithRows { File = "Foo", Rows = new []{ "one", "two" } },
-                new FilesWithRows { File = "Bar", Rows = new []{ "one", "two" } },
             };
-            list.AddRowFirst("Foo", "Zero");
+            list.AddRowFirst("Zero");
             Assert.AreEqual(3, list.First().Rows.Count());
             Assert.AreEqual("Zero", list.First().Rows.First());
         }
@@ -37,9 +36,8 @@ namespace Tests
             var list = new List<FilesWithRows>()
             {
                 new FilesWithRows { File = "Foo", Rows = new []{ "one", "two" } },
-                new FilesWithRows { File = "Bar", Rows = new []{ "one", "two" } },
             };
-            list.AddRowLast("Foo", "Zero");
+            list.AddRowLast("Zero");
             Assert.AreEqual(3, list.First().Rows.Count());
             Assert.AreEqual("Zero", list.First().Rows.Last());
         }
@@ -50,11 +48,22 @@ namespace Tests
             var list = new List<FilesWithRows>()
             {
                 new FilesWithRows { File = "Foo", Rows = new []{ "one", "two" } },
-                new FilesWithRows { File = "Bar", Rows = new []{ "one", "two" } },
             };
-            list.ReplaceRow("Foo", "one", "Zero");
+            list.ReplaceRow("one", "Zero");
             Assert.AreEqual(2, list.First().Rows.Count());
             Assert.AreEqual("Zero", list.First().Rows.First());
+        }
+
+        [Test]
+        public void RemoveRowInCollection()
+        {
+            var list = new List<FilesWithRows>()
+            {
+                new FilesWithRows { File = "Foo", Rows = new []{ "one", "two" } },
+            };
+            list.RemoveRow("one");
+            Assert.AreEqual(1, list.First().Rows.Count());
+            Assert.AreEqual("two", list.First().Rows.First());
         }
 
         [Test]
@@ -63,7 +72,7 @@ namespace Tests
             var list = new List<FilesWithRows>()
             {
             };
-            list.AddRowLast("Foo", "Zero");
+            list.AddRowLast( "Zero");
             Assert.IsEmpty(list);
         }
 
@@ -73,9 +82,8 @@ namespace Tests
             var list = new List<FilesWithRows>()
             {
                 new FilesWithRows { File = "Foo", Rows = Array.Empty<string>() },
-                new FilesWithRows { File = "Bar", Rows = new []{ "one", "two" } },
             };
-            list.AddRowLast("Foo", "Zero");
+            list.AddRowLast("Zero");
             Assert.AreEqual(1, list.First().Rows.Count());
             Assert.AreEqual("Zero", list.First().Rows.Last());
         }

@@ -46,7 +46,7 @@ namespace Console
             var rows = content.ToListOfRows();
             for (int i = 0; i < rows.Count; i++)
             {
-                rows[i] = rows[i].AddRowNumber(i+1);
+                rows[i] = rows[i].AddRowNumber(i + 1);
             }
 
             return rows.ToArray();
@@ -58,7 +58,7 @@ namespace Console
             var list = ToListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i +1);
+                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
             }
             return result.ToArray();
         }
@@ -71,6 +71,11 @@ namespace Console
                 if (string.Equals(list[i].Trim(), search.Trim(), StringComparison.InvariantCultureIgnoreCase)) return i + 1;
             }
             throw new SearchStringNotFoundException(search);
+        }
+
+        public static string RowsToString(this string[] rows)
+        {
+            return string.Join(Environment.NewLine, rows);
         }
 
         public static void AddRow(this List<string> collection, string item, int rowNumber)

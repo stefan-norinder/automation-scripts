@@ -24,17 +24,18 @@ namespace Console
     public static class FilesWithRowsExtensions
     {
 
-        public static void AddRowFirst(this IEnumerable<FilesWithRows> collection, string file, string row)
+        public static void AddRowFirst(this IEnumerable<FilesWithRows> collection, string row)
         {
-            AddRowAtPoistion(ref collection, file, row, GetFirst);
+            AddRowAtPoistion(ref collection, row, GetFirst);
         }
-        public static void AddRowLast(this IEnumerable<FilesWithRows> collection, string file, string row)
+        public static void AddRowLast(this IEnumerable<FilesWithRows> collection, string row)
         {
-            AddRowAtPoistion(ref collection, file, row, GetLast);
+            AddRowAtPoistion(ref collection, row, GetLast);
         }
-        public static void ReplaceRow(this IEnumerable<FilesWithRows> collection, string file, string row, string newRow)
+
+        public static void ReplaceRow(this IEnumerable<FilesWithRows> collection, string row, string newRow)
         {
-            foreach (var filesWithRows in collection.Where(x => x.File == file))
+            foreach (var filesWithRows in collection)
             {
                 for (int i = 0; i < filesWithRows.Rows.Length; i++)
                 {
@@ -46,9 +47,26 @@ namespace Console
             }
         }
 
-        private static void AddRowAtPoistion(ref IEnumerable<FilesWithRows> collection, string file, string row, Func<int, int> position)
+        public static void RemoveRow(this IEnumerable<FilesWithRows> collection, string row)
         {
-            foreach (var filesWithRows in collection.Where(x => x.File == file))
+            foreach (var filesWithRows in collection)
+            {
+                var list = filesWithRows.Rows.ToList();
+                list.Remove(row);
+                filesWithRows.Rows = list.ToArray();
+            }
+        }
+        public static void Save(this IEnumerable<FilesWithRows> files)
+        {
+            foreach (var fileAndRows in files)
+            {
+                FileHelpers.Write(fileAndRows.File, fileAndRows.Rows.RowsToString());
+            }
+        }
+
+    private static void AddRowAtPoistion(ref IEnumerable<FilesWithRows> collection, string row, Func<int, int> position)
+        {
+            foreach (var filesWithRows in collection)
             {                
                 var rows = filesWithRows.Rows.ToList();
                 rows.Insert(position(rows.Count()), row);
