@@ -22,7 +22,7 @@ namespace Console
                         System.Console.WriteLine($"{Constants.Args.Print()}");
                         break;
                     case Constants.Args.GetFiles:
-                        filesAndRows = filesController.GetFilesBySearchString(args[1]);
+                        filesAndRows = filesController.GetFiles(args[1]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetAllFiles:
@@ -30,11 +30,11 @@ namespace Console
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetRows:
-                        filesAndRows = filesController.GetRowsBySearchString(args[1]);
+                        filesAndRows = filesController.SearchInAllFiles(args[1]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetRowsInFiles:
-                        filesAndRows = filesController.GetRowsBySearchString(args[1], args[2]);
+                        filesAndRows = filesController.SearchInFiles(args[1], args[2]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.AddRowFirst:
@@ -51,6 +51,10 @@ namespace Console
                         break;
                     case Constants.Args.RemoveText:
                         filesAndRows = filesController.RemoveText(args[1], args[2]);
+                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        break;
+                    case Constants.Args.ReplaceRow:
+                        filesAndRows = filesController.ReplaceRow(args[1], args[2], args[3]);
                         System.Console.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GitCommit:
@@ -101,6 +105,7 @@ namespace Console
             public const string AddRowFirst = "add-row-first";
             public const string AddRowLast = "add-row-last";
             public const string ReplaceText = "replace-text";
+            public const string ReplaceRow = "replace-row";
             public const string RemoveText = "remove-text";
             public const string GitCommit = "git-commit";
             public const string GitPush = "git-push";

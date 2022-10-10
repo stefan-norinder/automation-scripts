@@ -77,7 +77,9 @@ namespace Console
     public static class StringCollectionExtension
     {
         private const string filtredFileEndings = ".dll .exe .pdb";
-        private const string filtredDirectories = "\\bin \\node_modules ";
+        private const string filtredDirectories = 
+            //"\\bin " +
+            "\\node_modules ";
         public static string[] FilterFileEndings(this string[] files)
         {
             var items = Filter(files, filtredFileEndings, EndsWith);

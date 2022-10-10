@@ -6,35 +6,15 @@ namespace Console
 {
     public class FilesController
     {
-        public IEnumerable<FilesWithRows> GetRowsBySearchString(string searchString)
+        public IEnumerable<FilesWithRows> SearchInAllFiles(string searchString)
         {
-            var filesWithRows = new List<FilesWithRows>();
             var files = FileHelpers.GetAllFiles();
-            foreach (var file in files)
-            {
-                var content = FileHelpers.Read(file);
-                var rows = content.GetRowsBySearch(searchString);
-                if (rows.Any())
-                {
-                    filesWithRows.Add(new FilesWithRows { File = file, Rows = rows });
-                }
-            }
-            return filesWithRows;
+            return SearchInFiles(searchString, files);
         }
-        public IEnumerable<FilesWithRows> GetRowsBySearchString(string fileFilter, string searchString)
+        public IEnumerable<FilesWithRows> SearchInFiles(string fileFilter, string searchString)
         {
-            var filesWithRows = new List<FilesWithRows>();
             var files = FileHelpers.GetFilesRecursiveByName(fileFilter);
-            foreach (var file in files)
-            {
-                var content = FileHelpers.Read(file);
-                var rows = content.GetRowsBySearch(searchString);
-                if (rows.Any())
-                {
-                    filesWithRows.Add(new FilesWithRows { File = file, Rows = rows });
-                }
-            }
-            return filesWithRows;
+            return SearchInFiles(searchString, files);
         }
 
         public IEnumerable<FilesWithRows> GetAllFiles()
@@ -43,7 +23,7 @@ namespace Console
             return files.Select(x => new FilesWithRows { File = x });
         }
 
-        public IEnumerable<FilesWithRows> GetFilesBySearchString(string searchString)
+        public IEnumerable<FilesWithRows> GetFiles(string searchString)
         {
             var files = FileHelpers.GetFilesRecursiveByName(searchString);
             return files.Select(x => new FilesWithRows { File = x });
@@ -64,9 +44,29 @@ namespace Console
             return ManipulateRow(fileName, textToReplace, null, newText, StringExtensions.ReplaceText);
         }
 
+        public IEnumerable<FilesWithRows> ReplaceRow(string fileName, string textToReplace, string newText)
+        {
+            return ManipulateRow(fileName, textToReplace, null, newText, StringExtensions.ReplaceText);
+        }
+
         public IEnumerable<FilesWithRows> RemoveText(string fileName, string textToRemove)
         {
             return ManipulateRow(fileName, textToRemove, StringExtensions.RemoveText);
+        }
+
+        private IEnumerable<FilesWithRows> SearchInFiles(string searchString, string[] files)
+        {
+            var filesWithRows = new List<FilesWithRows>();
+            foreach (var file in files)
+            {
+                var content = FileHelpers.Read(file);
+                var rows = content.GetRowsBySearch(searchString);
+                if (rows.Any())
+                {
+                    filesWithRows.Add(new FilesWithRows { File = file, Rows = rows });
+                }
+            }
+            return filesWithRows;
         }
 
         private IEnumerable<FilesWithRows> ManipulateRow(string fileName, string text, Func<string, string, string> func, string newText = "", Func<string, string, string,string> func2 = null)

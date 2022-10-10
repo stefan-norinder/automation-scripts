@@ -18,6 +18,7 @@ namespace Console
 
         public static string ReplaceText(this string content, string textToReplace, string newText)
         {
+            System.Console.WriteLine($"{textToReplace} > {newText}");
             return content.Replace(textToReplace, newText);
         }
 
@@ -57,7 +58,7 @@ namespace Console
             var list = ToListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i].Replace("\"","").Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i +1);
+                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i +1);
             }
             return result.ToArray();
         }
