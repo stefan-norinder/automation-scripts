@@ -86,5 +86,21 @@ namespace Tests
             var result = data.GetRowsBySearch("this is");
             Assert.AreEqual(3, result.Count());
         }
+
+        [Test]
+        public void FilterFiles()
+        {
+            var data = new[] { "/foo/bar.json", "/kuu/assambly.dll", "/inc/nak.cs", "/roo/apa.exe" };
+            var result = data.FilterFileEndings();
+            Assert.AreEqual(2, result.Count());
+        }
+
+        [Test]
+        public void FilterDirectories()
+        {
+            var data = new[] { "\\bin\\bar.json", "\\kuu\\assambly.dll", "\\node_modules\\nak.cs", "\\roo\\apa.exe" };
+            var result = data.FilterDirectories();
+            Assert.AreEqual(2, result.Count());
+        }
     }
 }

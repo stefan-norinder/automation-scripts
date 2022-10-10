@@ -54,12 +54,11 @@ namespace Console
         public static string[] GetRowsBySearch(this string content, string search)
         {
             var result = new List<string>();
-            List<string> list = ToListOfRows(content);
+            var list = ToListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i +1);
+                if (list[i].Replace("\"","").Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i +1);
             }
-            System.Console.Write("|");
             return result.ToArray();
         }
 
