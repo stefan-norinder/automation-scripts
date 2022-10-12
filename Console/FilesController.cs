@@ -38,8 +38,7 @@ namespace auto
 
         public IEnumerable<FilesWithRows> AddRowFirst(string fileName, string textToAdd)
         {
-            var filenames = fileService.GetFileNames(fileName);
-            var files = GetFilesWithRows(filenames);
+            var files = SearchForFilesByFileName(fileName); 
             files.AddRowFirst(textToAdd);
             fileService.Save(files);
             return files;
@@ -47,8 +46,8 @@ namespace auto
 
         public IEnumerable<FilesWithRows> AddRowLast(string fileName, string textToAdd)
         {
-            var files = SearchInFiles(fileName, textToAdd);
-            files.AddRowLast(fileName);
+            var files = SearchForFilesByFileName(fileName);
+            files.AddRowLast(textToAdd);
             fileService.Save(files);
             return files;
         }
@@ -66,6 +65,12 @@ namespace auto
             var files = SearchInFiles(fileName, textToRemove);
             files.RemoveRow(textToRemove);
             fileService.Save(files);
+            return files;
+        }
+        private IEnumerable<FilesWithRows> SearchForFilesByFileName(string fileName)
+        {
+            var filenames = fileService.GetFileNames(fileName);
+            var files = GetFilesWithRows(filenames);
             return files;
         }
         private IEnumerable<FilesWithRows> GetFilesWithRows(string[] files)
