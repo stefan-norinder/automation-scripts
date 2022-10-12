@@ -13,7 +13,7 @@ namespace auto
         bool FileExists(string path);
         string[] GetAllDirectories();
         string[] GetAllFiles(string path = "");
-        string[] GetFilesRecursiveByName(string fileName, string path = "");
+        string[] GetFileNames(string fileName, string path = "");
         string Read(string path, bool pathIsRelative = false);
         void Write(string path, string content);
 
@@ -30,7 +30,7 @@ namespace auto
             this.filesAdapter = filesAdapter ?? new FilesAdapter();
         }
 
-        public string[] GetFilesRecursiveByName(string fileName, string path = "")
+        public string[] GetFileNames(string fileName, string path = "")
         {
             if (string.IsNullOrEmpty(path)) path = FilesAdapter.CurrentDirectory;
 

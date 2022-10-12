@@ -40,7 +40,7 @@ namespace auto
             if (string.IsNullOrEmpty(row)) return string.Empty;
             return row.Trim();
         }
-        public static string[] ToRows(this string content)
+        public static string[] ToRowsWithLineNumber(this string content)
         {
             var rows = content.ToListOfRows();
             for (int i = 0; i < rows.Count; i++)
@@ -86,8 +86,9 @@ namespace auto
             return $"[{rowNumber}] {str.Trim()}";
         }
 
-        private static List<string> ToListOfRows(this string content)
+        public static List<string> ToListOfRows(this string content)
         {
+            if (string.IsNullOrEmpty(content)) return Enumerable.Empty<string>().ToList();
             var array = content.Split(Environment.NewLine);
             return array.ToList();
         }

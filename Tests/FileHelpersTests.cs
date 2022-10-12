@@ -38,7 +38,7 @@ namespace Tests
         [Test]
         public void GetFilesByNameRecursive()
         {
-            var files = FileHelpers.GetFilesRecursiveByName("*foo.txt");
+            var files = FileHelpers.GetFileNames("*foo.txt");
             //gets filtered because inside bin directory
             Assert.AreEqual(0, files.Count());
         }

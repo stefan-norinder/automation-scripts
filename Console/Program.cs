@@ -23,11 +23,11 @@ namespace auto
                         output.WriteLine($"{Constants.Args.Print()}");
                         break;
                     case Constants.Args.GetFiles:
-                        filesAndRows = filesController.GetFiles(args[1]);
+                        filesAndRows = filesController.GetFilesWithEmptyRows(args[1]);
                         output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetAllFiles:
-                        filesAndRows = filesController.GetAllFiles();
+                        filesAndRows = filesController.GetAllFilesWithEmptyRows();
                         output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetRows:
