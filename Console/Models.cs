@@ -70,13 +70,15 @@ namespace auto
         private static int GetFirst(int length) => 0;
         private static int GetLast(int length) => length;
 
-        public static string Print(this IEnumerable<FilesWithRows> collection)
+        public static string Print(this IEnumerable<FilesWithRows> collection, bool onlyFilesWithMatchingRows = false)
         {
             if (!collection.Any())
             {
                 return $"The operation generated no output. When searching for filenames you can use wildcards (*) to get more hits, e.g. '*the_file.txt'. ";
             }
-            return string.Join($"{Environment.NewLine}{Environment.NewLine}", collection.Select(x => x.ToString()));
+            var list = collection;
+            if (onlyFilesWithMatchingRows) list = list.Where(x => x.Rows.Any());
+            return string.Join($"{Environment.NewLine}{Environment.NewLine}", list.Select(x => x.ToString()));
         }
     }
 }

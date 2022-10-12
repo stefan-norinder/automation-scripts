@@ -30,29 +30,25 @@ namespace auto
                         filesAndRows = filesController.GetAllFilesWithEmptyRows();
                         output.WriteLine($"{filesAndRows.Print()}");
                         break;
-                    case Constants.Args.GetRows:
-                        filesAndRows = filesController.SearchInAllFiles(args[1]);
-                        output.WriteLine($"{filesAndRows.Print()}");
-                        break;
                     case Constants.Args.GetRowsInFiles:
                         filesAndRows = filesController.SearchInFiles(args[1], args[2]);
-                        output.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print(onlyFilesWithMatchingRows: true)}");
                         break;
                     case Constants.Args.AddRowFirst:
                         filesAndRows = filesController.AddRowFirst(args[1], args[2]);
-                        output.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print(onlyFilesWithMatchingRows: true)}");
                         break;
                     case Constants.Args.AddRowLast:
                         filesAndRows = filesController.AddRowLast(args[1], args[2]);
-                        output.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print(onlyFilesWithMatchingRows: true)}");
                         break;
                     case Constants.Args.ReplaceRow:
                         filesAndRows = filesController.ReplaceRow(args[1], args[2], args[3]);
-                        output.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print(onlyFilesWithMatchingRows: true)}");
                         break;
                     case Constants.Args.RemoveText:
                         filesAndRows = filesController.RemoveRow(args[1], args[2]);
-                        output.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print(onlyFilesWithMatchingRows: true)}");
                         break;
                     case Constants.Args.GitCommit:
                         filesAndRows = gitController.CommitAllChildDirectories(args[1]);
@@ -97,8 +93,7 @@ namespace auto
 
             public const string GetFiles = "get-files";
             public const string GetAllFiles = "get-all-files";
-            public const string GetRows = "get-rows";
-            public const string GetRowsInFiles = "get-rows-in-files";
+            public const string GetRowsInFiles = "get-rows";
             public const string AddRowFirst = "add-row-first";
             public const string AddRowLast = "add-row-last";
             public const string ReplaceRow = "replace-row";

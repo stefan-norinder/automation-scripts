@@ -53,23 +53,24 @@ namespace auto
 
         public static string[] GetRowsBySearch(this string content, string search)
         {
+            string trimmedSearch = search.Trim();
             var result = new List<string>();
             var list = ToListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (search.StartsWith("*") && search.EndsWith("*"))
+                if (trimmedSearch.StartsWith("*") && trimmedSearch.EndsWith("*"))
                 {
-                    if (list[i].Trim().Contains(search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                    if (list[i].Trim().Contains(trimmedSearch.Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
                 }
-                else if (search.EndsWith("*"))
+                else if (trimmedSearch.EndsWith("*"))
                 {
-                    if (list[i].Trim().StartsWith(search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                    if (list[i].Trim().StartsWith(trimmedSearch.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
                 }
-                else if (search.StartsWith("*"))
+                else if (trimmedSearch.StartsWith("*"))
                 {
-                    if (list[i].Trim().EndsWith(search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                    if (list[i].Trim().EndsWith(trimmedSearch.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
                 }
-                else if (string.Equals(list[i].Trim(), search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                else if (string.Equals(list[i].Trim(), trimmedSearch.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
             }
             return result.ToArray();
         }

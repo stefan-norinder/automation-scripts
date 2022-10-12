@@ -12,17 +12,6 @@ namespace auto
         {
             this.fileService = fileService ?? new FileService();
         }
-
-        /// <summary>
-        /// Returns files with rows where the search string is found
-        /// </summary>
-        /// <param name="searchString">String  to search for in rows</param>
-        /// <returns>Files and rows where searchstring i present</returns>
-        public IEnumerable<FilesWithRows> SearchInAllFiles(string searchString)
-        {
-            var files = fileService.GetAllFiles();
-            return SearchInFiles(searchString, files);
-        }
         /// <summary>
         /// Returns files with rows where the search string is found
         /// </summary>
