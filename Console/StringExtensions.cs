@@ -18,7 +18,7 @@ namespace auto
 
         public static string ReplaceText(this string content, string textToReplace, string newText)
         {
-            System.Console.WriteLine($"{textToReplace} > {newText}");
+            output.WriteLine($"{textToReplace} > {newText}");
             return content.Replace(textToReplace, newText);
         }
 

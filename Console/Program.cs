@@ -9,6 +9,7 @@ namespace auto
     {
         static void Main(string[] args)
         {
+            var output = new ConsoleOutput();
             try
             {
                 var filesAndRows = Enumerable.Empty<FilesWithRows>();
@@ -19,51 +20,51 @@ namespace auto
                 {
                     case "Help":
                     case "?":
-                        System.Console.WriteLine($"{Constants.Args.Print()}");
+                        output.WriteLine($"{Constants.Args.Print()}");
                         break;
                     case Constants.Args.GetFiles:
                         filesAndRows = filesController.GetFiles(args[1]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetAllFiles:
                         filesAndRows = filesController.GetAllFiles();
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetRows:
                         filesAndRows = filesController.SearchInAllFiles(args[1]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GetRowsInFiles:
                         filesAndRows = filesController.SearchInFiles(args[1], args[2]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.AddRowFirst:
                         filesAndRows = filesController.AddRowFirst(args[1], args[2]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.AddRowLast:
                         filesAndRows = filesController.AddRowLast(args[1], args[2]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.ReplaceRow:
                         filesAndRows = filesController.ReplaceRow(args[1], args[2], args[3]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.RemoveText:
                         filesAndRows = filesController.RemoveRow(args[1], args[2]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GitCommit:
                         filesAndRows = gitController.CommitAllChildDirectories(args[1]);
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GitPush:
                         filesAndRows = gitController.PushAllChildDirectories();
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     case Constants.Args.GitStatus:
                         filesAndRows = gitController.GetStatusAllChildDirectories();
-                        System.Console.WriteLine($"{filesAndRows.Print()}");
+                        output.WriteLine($"{filesAndRows.Print()}");
                         break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
@@ -71,8 +72,8 @@ namespace auto
             }
             catch (Exception e)
             {
-                if (e.Message == "Index was outside the bounds of the array.") System.Console.WriteLine("Fel antal argument.");
-                else System.Console.WriteLine($"Error!{Environment.NewLine}{Environment.NewLine}{e.Message}{Environment.NewLine}{Environment.NewLine}{e.StackTrace}{Environment.NewLine}{Environment.NewLine}");
+                if (e.Message == "Index was outside the bounds of the array.") output.WriteLine("Fel antal argument.");
+                else output.WriteLine($"Error!{Environment.NewLine}{Environment.NewLine}{e.Message}{Environment.NewLine}{Environment.NewLine}{e.StackTrace}{Environment.NewLine}{Environment.NewLine}");
             }
         }
     }
