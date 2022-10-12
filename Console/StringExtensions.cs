@@ -57,7 +57,19 @@ namespace auto
             var list = ToListOfRows(content);
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i].Contains(search.Trim(), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                if (search.StartsWith("*") && search.EndsWith("*"))
+                {
+                    if (list[i].Trim().Contains(search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                }
+                else if (search.EndsWith("*"))
+                {
+                    if (list[i].Trim().StartsWith(search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                }
+                else if (search.StartsWith("*"))
+                {
+                    if (list[i].Trim().EndsWith(search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
+                }
+                else if (string.Equals(list[i].Trim(), search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) result.AddRow(list[i], i + 1);
             }
             return result.ToArray();
         }
@@ -67,7 +79,7 @@ namespace auto
             var list = content.ToListOfRows();
             for (int i = 0; i < list.Count(); i++)
             {
-                if (string.Equals(list[i].Trim(), search.Trim(), StringComparison.InvariantCultureIgnoreCase)) return i + 1;
+                if (string.Equals(list[i].Trim(), search.Trim().Replace("*", ""), StringComparison.InvariantCultureIgnoreCase)) return i + 1;
             }
             throw new SearchStringNotFoundException(search);
         }

@@ -70,8 +70,13 @@ namespace auto
         private static int GetFirst(int length) => 0;
         private static int GetLast(int length) => length;
 
-        public static string Print(this IEnumerable<FilesWithRows> collection) => string.Join($"{Environment.NewLine}{Environment.NewLine}", collection.Select(x => x.ToString()));
-
-
+        public static string Print(this IEnumerable<FilesWithRows> collection)
+        {
+            if (!collection.Any())
+            {
+                return $"The operation generated no output. When searching for filenames you can use wildcards (*) to get more hits, e.g. '*the_file.txt'. ";
+            }
+            return string.Join($"{Environment.NewLine}{Environment.NewLine}", collection.Select(x => x.ToString()));
+        }
     }
 }

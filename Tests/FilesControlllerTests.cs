@@ -96,6 +96,21 @@ namespace Tests
               p.First().Rows[0] == "First row for now" &&
               p.First().Rows[1] == "This is the third line")));
         }
+        
+        [Test]
+        public void GetRows()
+        {
+            const string fileName = "foo";
+            var fileServiceMock = new Mock<IFileService>();
+            fileServiceMock.Setup(x => x.GetFileNames(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new[] { "foo.txt" });
+            fileServiceMock.Setup(x => x.Read(It.Is<string>(p => p == "foo.txt"), It.IsAny<bool>()))
+                .Returns($"First row for now{Environment.NewLine}This is the second line{Environment.NewLine}This is the third line");
+            var controller = new FilesController(fileServiceMock.Object);
+            var result = controller.SearchInFiles(fileName, "*second*");
+            Assert.AreEqual(1, result.First().Rows.Count());
+            Assert.AreEqual("[2] This is the second line", result.First().Rows.First());
+        }
 
     }
 }

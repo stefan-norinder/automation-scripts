@@ -72,18 +72,27 @@ namespace Tests
         }
 
         [Test]
+        public void RowBySearchStringWithWildcards()
+        {
+            var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
+            var expexted = "[2] And this is the second line";
+            var result = data.GetRowsBySearch("*the second line");
+            Assert.AreEqual(expexted, result.First());
+        }
+
+        [Test]
         public void RowBySearchString()
         {
             var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
             var expexted = "[2] And this is the second line";
-            var result = data.GetRowsBySearch("the second line");
+            var result = data.GetRowsBySearch("And this is the second line");
             Assert.AreEqual(expexted, result.First());
         }
         [Test]
         public void RowsBySearchString()
         {
             var data = "This is the file foo \r\nAnd this is the second line \r\nThis is the third line";
-            var result = data.GetRowsBySearch("this is");
+            var result = data.GetRowsBySearch("*this is*");
             Assert.AreEqual(3, result.Count());
         }
 
