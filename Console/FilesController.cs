@@ -55,7 +55,7 @@ namespace auto
         public IEnumerable<FilesWithRows> ReplaceRow(string fileName, string textToReplace, string newText)
         {
             var files = SearchInFiles(fileName, textToReplace);
-            files.ReplaceRow(textToReplace,newText);
+            files.ReplaceRow(textToReplace, newText);
             fileService.Save(files);
             return files;
         }
@@ -75,22 +75,19 @@ namespace auto
             {
                 var content = fileService.Read(file);
                 var rows = content.GetRowsBySearch(searchString);
-                if (rows.Any())
-                {
-                    filesWithRows.Add(new FilesWithRows { File = file, Rows = rows });
-                }
+                filesWithRows.Add(new FilesWithRows { File = file, Rows = rows });
             }
             return filesWithRows;
         }
 
-        private IEnumerable<FilesWithRows> ManipulateRow(string fileName, string text, Func<string, string, string> func, string newText = "", Func<string, string, string,string> func2 = null)
+        private IEnumerable<FilesWithRows> ManipulateRow(string fileName, string text, Func<string, string, string> func, string newText = "", Func<string, string, string, string> func2 = null)
         {
             var filesAndRows = new List<FilesWithRows>();
             var files = fileService.GetFilesRecursiveByName(fileName);
             foreach (var file in files)
             {
                 var content = fileService.Read(file);
-                content = func != null ? func(content,text) : func2(content,text,newText);
+                content = func != null ? func(content, text) : func2(content, text, newText);
                 fileService.Write(file, content);
                 filesAndRows.Add(new FilesWithRows { File = file, Rows = content.ToRows() });
             }

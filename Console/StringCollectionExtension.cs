@@ -7,7 +7,7 @@ namespace auto
     {
         private const string filtredFileEndings = ".dll .exe .pdb";
         private const string filtredDirectories = 
-            //"\\bin " +
+            "\\bin " +
             "\\node_modules ";
         public static string[] FilterFileEndings(this string[] files)
         {

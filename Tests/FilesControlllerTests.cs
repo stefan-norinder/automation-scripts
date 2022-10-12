@@ -1,5 +1,10 @@
 ﻿using auto;
+using Moq;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+;
 
 namespace Tests
 {
@@ -16,17 +21,17 @@ namespace Tests
         }
 
         [Test]
-        public void AddRowToCollectionFirstPoistion()
+        public void AddRowToEmptyCollectionFirstPoistion()
         {
-            //var controller = new FilesController();
-            //controller.AddRowFirst("foo", "bar");
-            //var list = new List<FilesControlller>()
-            //{
-            //    new FilesControlller { File = "Foo", Rows = new []{ "one", "two" } },
-            //};
-            //list.AddRowFirst("Zero");
-            //Assert.AreEqual(3, list.First().Rows.Count());
-            //Assert.AreEqual("Zero", list.First().Rows.First());
+            const string fileName = "foo";
+            var fileServiceMock = new Mock<IFileService>();
+            fileServiceMock.Setup(x => x.GetFilesRecursiveByName(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new[] { "foo.txt" });
+            fileServiceMock.Setup(x => x.Read(It.Is<string>(p => p == "foo.txt"), It.IsAny<bool>()))
+                .Returns(string.Empty);
+            var controller = new FilesController(fileServiceMock.Object);
+            controller.AddRowFirst(fileName, "bar");
+            fileServiceMock.Verify(x => x.Save(It.Is<IEnumerable<FilesWithRows>>(p => p.Count() == 1)));
         }
 
    

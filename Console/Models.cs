@@ -57,10 +57,10 @@ namespace auto
             }
         }
 
-    private static void AddRowAtPoistion(ref IEnumerable<FilesWithRows> collection, string row, Func<int, int> position)
+        private static void AddRowAtPoistion(ref IEnumerable<FilesWithRows> collection, string row, Func<int, int> position)
         {
             foreach (var filesWithRows in collection)
-            {                
+            {
                 var rows = filesWithRows.Rows.ToList();
                 rows.Insert(position(rows.Count()), row);
                 filesWithRows.Rows = rows.ToArray();
