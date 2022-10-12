@@ -62,7 +62,7 @@ namespace auto
 
         public IEnumerable<FilesWithRows> RemoveRow(string fileName, string textToRemove)
         {
-            var files = SearchInFiles(fileName, textToRemove);
+            var files = SearchForFilesByFileName(fileName);
             files.RemoveRow(textToRemove);
             fileService.Save(files);
             return files;
