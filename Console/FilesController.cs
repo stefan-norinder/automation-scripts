@@ -54,7 +54,7 @@ namespace auto
 
         public IEnumerable<FilesWithRows> ReplaceRow(string fileName, string textToReplace, string newText)
         {
-            var files = SearchInFiles(fileName, textToReplace);
+            var files = SearchForFilesByFileName(fileName);
             files.ReplaceRow(textToReplace, newText);
             fileService.Save(files);
             return files;
