@@ -2,10 +2,17 @@
 using System.Linq;
 using System.Management.Automation;
 
-namespace Console
+namespace auto
 {
     public class GitController
     {
+        private readonly IFileService fileService;
+
+        public GitController(IFileService fileService=null)
+        {
+            this.fileService = fileService ?? new FileService();
+        }
+
         public IEnumerable<FilesWithRows> CommitAllChildDirectories(string message)
         {
             return ExecuteCommands(@"git add .", $"git commit -m '{message}'" );
@@ -24,7 +31,7 @@ namespace Console
         private IEnumerable<FilesWithRows> ExecuteCommands(params string[] commands)
         {
             var result = new List<FilesWithRows>();
-            foreach (var directory in FileHelpers.GetAllDirectories())
+            foreach (var directory in fileService.GetAllDirectories())
             {
                 using (var powershell = PowerShell.Create())
                 {

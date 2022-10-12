@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Console
+namespace auto
 {
     public class SearchStringNotFoundException : Exception
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Console
+namespace auto
 {
     public class FilesWithRows
     {
@@ -54,13 +54,6 @@ namespace Console
                 var list = filesWithRows.Rows.ToList();
                 list.Remove(row);
                 filesWithRows.Rows = list.ToArray();
-            }
-        }
-        public static void Save(this IEnumerable<FilesWithRows> files)
-        {
-            foreach (var fileAndRows in files)
-            {
-                FileHelpers.Write(fileAndRows.File, fileAndRows.Rows.RowsToString());
             }
         }
 

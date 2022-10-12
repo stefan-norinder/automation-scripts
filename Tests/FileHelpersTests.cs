@@ -1,4 +1,4 @@
-using Console;
+using auto;
 using NUnit.Framework;
 using System.Linq;
 
@@ -6,6 +6,8 @@ namespace Tests
 {
     public class FileHelpersTests
     {
+        private IFileService FileHelpers = new FileService();
+
         [SetUp]
         public void Setup()
         {
