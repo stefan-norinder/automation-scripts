@@ -14,7 +14,7 @@
 
         public void WriteLine(string msg)
         {
-            System.Console.Write(msg);
+            System.Console.WriteLine(msg);
         }
     }
 }
