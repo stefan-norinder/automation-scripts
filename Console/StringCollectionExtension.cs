@@ -6,17 +6,18 @@ namespace auto
     public static class StringCollectionExtension
     {
         private const string filtredFileEndings = ".dll .exe .pdb";
-        private const string filtredDirectories =
+        public static string FiltredDirectories =
             "\\bin " +
+            "\\obj " +
             "\\node_modules ";
         public static string[] FilterFileEndings(this string[] files)
         {
             var items = Filter(files, filtredFileEndings, EndsWith);
-            return Filter(items, filtredDirectories, Contains);
+            return Filter(items, FiltredDirectories, Contains);
         }
         public static string[] FilterDirectories(this string[] files)
         {
-            return Filter(files, filtredDirectories, Contains);
+            return Filter(files, FiltredDirectories, Contains);
         }
         public static string GetOrDefault(this string[] args, int position)
         {

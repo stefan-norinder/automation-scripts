@@ -7,17 +7,23 @@ namespace Tests
     public class FileHelpersTests
     {
         private IFileService FileHelpers = new FileService();
+        private string tmp;
 
         [SetUp]
         public void Setup()
         {
             FileHelpers.CreateFile("inc.txt", "/TestData");
+
+            tmp = StringCollectionExtension.FiltredDirectories;
+
+            StringCollectionExtension.FiltredDirectories = StringCollectionExtension.FiltredDirectories.Replace("\\bin", "");
         }
         
         [TearDown]
         public void TearDown()
         {
             FileHelpers.DeleteFile("bar.txt", "/TestData");
+            StringCollectionExtension.FiltredDirectories = tmp;
         }
 
         [Test]
@@ -38,9 +44,19 @@ namespace Tests
         [Test]
         public void GetFilesByNameRecursive()
         {
+            StringCollectionExtension.FiltredDirectories = StringCollectionExtension.FiltredDirectories.Replace("\\bin", "");
             var files = FileHelpers.GetFileNames("*foo.txt");
             //gets filtered because inside bin directory
-            Assert.AreEqual(0, files.Count());
+            Assert.AreEqual(2, files.Count());
+        }
+
+        [Test]
+        public void GetFilesByNameFromFolder()
+        {
+            StringCollectionExtension.FiltredDirectories = StringCollectionExtension.FiltredDirectories.Replace("\\bin", "");
+            var files = FileHelpers.GetFileNames("*net5.0/TestData/foo.txt");
+            //gets filtered because inside bin directory
+            Assert.AreEqual(1, files.Count());
         }
 
         [Test]

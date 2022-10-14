@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace auto
@@ -98,7 +99,10 @@ namespace auto
 
         private string[] GetFilesFiltred(string fileName, string path)
         {
-            return FilesAdapter.GetFiles(path, $"{fileName}").FilterFileEndings();
+            fileName = fileName.Replace("/","\\").Replace("*", "");
+            var fileNameWithoutFolder = fileName.Split("\\", StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+            var files = FilesAdapter.GetFiles(path, $"{fileNameWithoutFolder}").FilterFileEndings();
+            return files.Where(x => x.Contains(fileName)).ToArray();
         }
 
         #endregion
