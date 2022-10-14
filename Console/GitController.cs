@@ -27,6 +27,10 @@ namespace auto
         {
             return ExecuteCommands(@"git push");
         }
+        public IEnumerable<FilesWithRows> UndoAllWorkInChildDirectories()
+        {
+            return ExecuteCommands(@"git checkout .");
+        }
 
         private IEnumerable<FilesWithRows> ExecuteCommands(params string[] commands)
         {

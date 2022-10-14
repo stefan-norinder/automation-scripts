@@ -33,6 +33,7 @@ namespace auto
             public const string GitCommit = "git-commit";
             public const string GitPush = "git-push";
             public const string GitStatus = "git-status";
+            public const string GitUndo = "git-undo";
         }
     }
 }

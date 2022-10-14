@@ -69,6 +69,10 @@ namespace auto
                         filesAndRows = gitController.GetStatusAllChildDirectories();
                         output.WriteLine($"{filesAndRows.Print()}");
                         break;
+                    case Constants.Args.GitUndo:
+                        filesAndRows = gitController.UndoAllWorkInChildDirectories();
+                        output.WriteLine($"{filesAndRows.Print()}");
+                        break;
                     default:
                         throw new Exception(string.Join(", ", args) + " are not valid parameters");
                 }
@@ -93,8 +97,8 @@ namespace auto
             PrintHey(output);
             output.WriteLine($"{Environment.NewLine}...and welcome to some sort of multi file and git manipulation application!");
             output.WriteLine($"Type \"auto.exe ?\" for help");
-            output.WriteLine($"Please mind that if you want to include qoutes (\") in the search string, use percent (%) instead{Environment.NewLine}");
-            output.WriteLine($"Disclaimer: use at own risk! Satisfaction NOT guaranteed.");
+            output.WriteLine($"Please mind that if you want to include qoutes (\") in the search string, use percent (%) instead");
+            output.WriteLine($"Disclaimer: use at own risk! Satisfaction NOT guaranteed.{Environment.NewLine}");
             output.WriteLine($"Search params: {Environment.NewLine}File name: \"{fileName}\"{Environment.NewLine}Search text: \"{searchText}\"{Environment.NewLine}Replacement text: \"{replacementText}\"{Environment.NewLine}");
         }
 
