@@ -1,1 +1,2 @@
-dotnet publish -c Release /p:PublishProfile=Properties\PublishProfiles\FolderProfile.pubxml
+dotnet publish -c Release /p:PublishProfile=Properties\PublishProfiles\publish-to-code-folder.pubxml
+dotnet publish -c Release /p:PublishProfile=Properties\PublishProfiles\publish-to-code2-folder.pubxml
